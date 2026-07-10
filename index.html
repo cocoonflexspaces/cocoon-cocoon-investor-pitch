@@ -1941,7 +1941,6 @@ body:hover #slide-counter { opacity: 1; }
 <!-- SLIDE COUNTER -->
 <div id="slide-counter"></div>
 
-<button class="export-btn" id="export-btn">📋 Notes</button>
 
 <script>
 // ─── PRESENTATION ENGINE ───
@@ -2004,8 +2003,9 @@ function goTo(idx, dir) {
 
 function navigate(dir) { goTo(current + dir, dir); }
 
-// Keyboard
+// Keyboard — skip when typing in a note textarea
 document.addEventListener('keydown', function(e) {
+  if (document.activeElement && document.activeElement.tagName === 'TEXTAREA') return;
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
     e.preventDefault(); navigate(1);
   } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
@@ -2013,9 +2013,10 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// Mouse wheel (debounced)
+// Mouse wheel (debounced) — skip if inside note drawer
 var wheelTimer = null;
 document.addEventListener('wheel', function(e) {
+  if (e.target.closest && e.target.closest('.note-drawer')) return;
   e.preventDefault();
   if (wheelTimer) return;
   var dir = e.deltaY > 0 || e.deltaX > 0 ? 1 : -1;
@@ -2067,18 +2068,4 @@ function saveNote(slideId) {
   document.getElementById('note-' + slideId).classList.remove('open');
 }
 
-// ─── EXPORT NOTES ───
-document.getElementById('export-btn').onclick = function() {
-  var lines = [];
-  for (var i = 1; i <= 21; i++) {
-    var val = localStorage.getItem('note-s' + i);
-    if (val && val.trim()) lines.push('SLIDE ' + i + ':\n' + val.trim());
-  }
-  if (!lines.length) { alert('No notes found.'); return; }
-  navigator.clipboard.writeText(lines.join('\n\n---\n\n')).then(function() {
-    var btn = document.getElementById('export-btn');
-    btn.textContent = '✓ Copied!';
-    setTimeout(function(){ btn.textContent = '📋 Notes'; }, 2000);
-  });
-};
 </script>
