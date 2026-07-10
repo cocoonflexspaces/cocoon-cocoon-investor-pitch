@@ -1872,6 +1872,47 @@ body {
   <div class="slide-num" style="color:rgba(245,242,232,0.3);">21 / 21</div>
 </div>
 
+
+<style>
+#send-notes-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(245,64,41,0.4);
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: opacity 0.3s, background 0.2s;
+}
+body:hover #send-notes-btn { opacity: 1; }
+#send-notes-btn:hover { background: #d93520; }
+</style>
+
+<button id="send-notes-btn">✉ Send Notes to Eduard</button>
+
+<script>
+document.getElementById('send-notes-btn').onclick = function() {
+  var lines = [];
+  for (var i = 1; i <= 21; i++) {
+    var key = i === 18 ? 'note-s18' : 'note-s' + i;
+    var val = localStorage.getItem(key);
+    if (val && val.trim()) lines.push('SLIDE ' + i + ':\n' + val.trim());
+  }
+  if (!lines.length) { alert('No notes saved yet. Add notes using the ✏ Note button on each slide.'); return; }
+  var subject = encodeURIComponent('Cocoon Investor Deck — Notes from Sokki');
+  var body = encodeURIComponent(lines.join('\n\n---\n\n'));
+  window.location.href = 'mailto:eduard@cocoonflexspaces.com?subject=' + subject + '&body=' + body;
+};
+</script>
 </body>
 </html>
 
