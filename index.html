@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cocoon Flex Spaces — 2026 Investor Deck</title>
+<style>
+:root {
+  --red:        #F54029;
+  --teal:       #275453;
+  --cream:      #F5F2E8;
+  --cream-deep: #ECE7D6;
+  --ink:        #1A1A1A;
+  --ink-soft:   #4A4A4A;
+  --ink-mute:   #6B6B6B;
+  --white:      #FFFFFF;
+  --rule:       rgba(26,26,26,0.12);
+  --slide-w:    1280px;
+  --slide-h:    720px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; background: #111; }
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: #0a0a0a;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── DECK CONTAINER ─── */
+#deck {
+  width: var(--slide-w);
+  height: var(--slide-h);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* ─── SLIDE WRAPPER ─── */
+.slide {
+  width: var(--slide-w);
+  height: var(--slide-h);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateX(80px) scale(0.97);
+  transition: none;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.slide.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: all;
+  transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1),
+              transform 0.55s cubic-bezier(0.22,1,0.36,1);
+  z-index: 2;
+}
+.slide.exit-left {
+  opacity: 0;
+  transform: translateX(-60px) scale(0.97);
+  transition: opacity 0.45s cubic-bezier(0.4,0,1,1),
+              transform 0.45s cubic-bezier(0.4,0,1,1);
+  z-index: 1;
+}
+.slide.enter-right {
+  opacity: 0;
+  transform: translateX(80px) scale(0.97);
+  transition: none;
+  z-index: 0;
+}
+.slide.exit-right {
+  opacity: 0;
+  transform: translateX(80px) scale(0.97);
+  transition: opacity 0.45s cubic-bezier(0.4,0,1,1),
+              transform 0.45s cubic-bezier(0.4,0,1,1);
+  z-index: 1;
+}
+.slide.enter-left {
+  opacity: 0;
+  transform: translateX(-60px) scale(0.97);
+  transition: none;
+  z-index: 0;
+}
+
+/* ─── SLIDE NUMBER ─── */
+.slide-num {
+  position: absolute;
+  bottom: 0;
+  right: 28px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  opacity: 0.5;
+}
+
+/* ─── LOGO FOOTER ─── */
+.slide-logo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  background: inherit;
+}
+.slide-logo img { height: 16px; opacity: 0.55; }
+
+/* ─── TOP ACCENT BAR (red, 6px) ─── */
+.accent-bar {
+  height: 6px;
+  background: var(--red);
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* ─── SECTION LABEL ─── */
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 14px;
+  background: var(--red);
+  border-radius: 2px;
+}
+
+/* ─── TYPE ─── */
+.slide-title {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.slide-headline {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.slide-body {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.slide-body-sm {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ─── CARD ─── */
+.card {
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+  padding: 24px;
+}
+
+/* ─── STAT TILE ─── */
+.stat-tile {
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--rule);
+  padding: 20px 24px;
+}
+.stat-num {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--red);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-mute);
+  margin-top: 6px;
+}
+
+/* ─── PILL TAG ─── */
+.pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 4px 10px;
+  border-radius: 100px;
+  border: 1.5px solid currentColor;
+}
+.pill-red { color: var(--red); border-color: var(--red); }
+.pill-teal { color: var(--teal); border-color: var(--teal); }
+
+/* ─── DIVIDER ─── */
+.rule { height: 1px; background: var(--rule); }
+
+/* ─── GRID HELPERS ─── */
+.col2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.col3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.col4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+
+/* ───────────────────────────────────────────────
+   SLIDE 1 — COVER
+─────────────────────────────────────────────── */
+#s1 {
+  background: var(--red);
+  flex-direction: row;
+}
+#s1 .left {
+  width: 480px;
+  flex-shrink: 0;
+  background: var(--red);
+  padding: 60px 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+#s1 .right {
+  flex: 1;
+  background: #2a1a16;
+  position: relative;
+  overflow: hidden;
+}
+#s1 .right-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.15);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  flex-direction: column;
+  gap: 10px;
+}
+#s1 .right-placeholder svg { opacity: 0.2; }
+#s1 .cover-mark { height: 78px; }
+#s1 .cover-wordmark { height: 22px; display: block; border: none; }
+#s1 .wordmark-link { display: block; margin-top: 28px; text-decoration: none; border: none; outline: none; line-height: 0; }
+#s1 .wordmark-link:hover { text-decoration: none; border: none; }
+#s1 .wordmark-link img { border: none; outline: none; }
+#s1 .cover-title {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+  margin-top: 0;
+}
+#s1 .cover-sub {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(245,242,232,0.65);
+  margin-top: 16px;
+}
+#s1 .cover-meta {
+  margin-top: auto;
+  padding-top: 40px;
+}
+#s1 .cover-meta-row {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(245,242,232,0.55);
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+#s1 .cover-meta-row span {
+  color: rgba(245,242,232,0.9);
+  font-weight: 500;
+}
+
+/* ───────────────────────────────────────────────
+   SLIDE 2 — THE OPPORTUNITY
+─────────────────────────────────────────────── */
+#s2 { background: var(--ink); flex-direction: column; }
+#s2 .inner {
+  flex: 1;
+  padding: 52px 64px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#s2 .op-title {
+  font-size: 68px;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  max-width: 760px;
+}
+#s2 .op-title em { color: var(--red); font-style: normal; }
+#s2 .op-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+#s2 .op-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 24px;
+}
+#s2 .op-card-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+#s2 .op-card-head {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+#s2 .op-card-body {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.5);
+}
+#s2 .slide-logo img { filter: brightness(0) invert(1); opacity: 0.4; }
+#s2 .slide-num { color: rgba(255,255,255,0.3); }
+
+/* ───────────────────────────────────────────────
+   SLIDE 3 — THE PROBLEM
+─────────────────────────────────────────────── */
+#s3 { background: var(--cream); }
+#s3 .inner {
+  flex: 1;
+  padding: 48px 64px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+#s3 .top { display: flex; flex-direction: column; gap: 10px; }
+#s3 .prob-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; }
+#s3 .prob-col {
+  background: var(--white);
+  border-radius: 10px;
+  border: 1px solid var(--rule);
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+#s3 .prob-col-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+}
+#s3 .prob-col-head {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+#s3 .prob-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+#s3 .prob-item::before {
+  content: '—';
+  color: var(--red);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+#s3 .prob-bridge {
+  grid-column: span 2;
+  background: var(--red);
+  border-radius: 8px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+#s3 .prob-bridge-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.4;
+}
+#s3 .prob-bridge-text span { opacity: 0.7; font-weight: 400; }
+
+/* ───────────────────────────────────────────────
+   SLIDE 4 — WHY NOW
+─────────────────────────────────────────────── */
+#s4 { background: var(--cream); }
+#s4 .inner {
+  flex: 1;
+  padding: 48px 64px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+#s4 .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; }
+#s4 .why-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#s4 .why-card.featured {
+  background: var(--ink);
+  border-color: transparent;
+}
+#s4 .why-tag {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--red);
+}
+#s4 .why-card.featured .why-tag { color: var(--red); }
+#s4 .why-head {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+#s4 .why-card.featured .why-head { color: var(--white); }
+#s4 .why-body {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+#s4 .why-card.featured .why-body { color: rgba(255,255,255,0.55); }
+#s4 .why-stat {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--red);
+  margin-top: auto;
+}
+#s4 .why-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+#s4 .why-card.featured .why-stat-label { color: rgba(255,255,255,0.4); }
+
+/* ───────────────────────────────────────────────
+   SLIDE 5 — MARKET SIZE
+─────────────────────────────────────────────── */
+#s5 { background: var(--cream); }
+#s5 .inner {
+  flex: 1;
+  padding: 48px 64px 60px;
+  display: flex;
+  gap: 48px;
+  align-items: stretch;
+}
+#s5 .left {
+  width: 380px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+}
+#s5 .right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#s5 .market-circles {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  justify-content: center;
+}
+#s5 .market-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+#s5 .market-bar {
+  height: 48px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+#s5 .market-bar.tam { background: var(--ink); width: 100%; }
+#s5 .market-bar.sam { background: var(--red); width: 70%; }
+#s5 .market-bar.som { background: var(--teal); width: 30%; }
+#s5 .market-bar-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.8);
+}
+#s5 .market-aside {
+  width: 180px;
+  flex-shrink: 0;
+}
+#s5 .market-aside-num {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+#s5 .market-aside-num.tam { color: var(--ink); }
+#s5 .market-aside-num.sam { color: var(--red); }
+#s5 .market-aside-num.som { color: var(--teal); }
+#s5 .market-aside-label {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+#s5 .market-note {
+  background: var(--cream-deep);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+
+/* ─── V2 NOTES ─── */
+.note-btn {
+  position: absolute;
+  top: 12px;
+  right: 52px;
+  z-index: 10;
+  background: rgba(0,0,0,0.18);
+  border: none;
+  border-radius: 100px;
+  padding: 5px 12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.15s, color 0.15s;
+}
+.note-btn:hover { background: rgba(245,64,41,0.7); color: #fff; }
+.note-btn.has-note { background: #F5C400; color: #3a3000; }
+.note-btn.has-note:hover { background: #e0b000; }
+
+.note-drawer {
+  display: none;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 20;
+  background: #FFFBEA;
+  border-top: 3px solid #F5C400;
+  padding: 14px 20px 12px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+}
+.note-drawer.open { display: block; }
+.note-drawer textarea {
+  width: 100%;
+  border: 1px solid #e8d96a;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #3a3000;
+  background: #fff;
+  resize: none;
+  height: 72px;
+  outline: none;
+}
+.note-drawer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.note-drawer-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #b8920a;
+}
+.note-save-btn {
+  background: #1A1A1A;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.note-save-btn:hover { background: #333; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 1 — COVER
+════════════════════════════════════════════ -->
+<div id="deck">
+<div class="slide" id="s1">
+  <div class="left">
+    <div style="display:flex; align-items:center; height:200px;">
+      <img src="img/cocoon/mark-128.png" alt="Cocoon mark" class="cover-mark" style="filter:brightness(0) invert(1); opacity:0.9;">
+    </div>
+    <div>
+      <div class="cover-title">Discover Space<br>To Create.</div>
+      <div class="cover-sub">New York City's only fully managed marketplace for design-forward private venues.</div>
+      <a href="https://cocoonflexspaces.com" target="_blank" class="wordmark-link"><img src="img/cocoon/wordmark-320.png" alt="cocoon" class="cover-wordmark" style="filter:brightness(0) invert(1); opacity:0.85;"></a>
+    </div>
+    <div class="cover-meta">
+      <div class="cover-meta-row">Raise <span>$2M Convertible Note</span></div>
+      <div class="cover-meta-row">Stage <span>Seed / Angel</span></div>
+      <div class="cover-meta-row">Year <span>7 · Profitable</span></div>
+      <div class="cover-meta-row">Prepared by <span>Eduard Monteagudo</span></div>
+      <div class="cover-meta-row">Date <span>July 2026</span></div>
+    </div>
+  </div>
+  <div class="right" style="background:#111;">
+    <img src="img/maxima/01.jpg" alt="Casa Maxima" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+  </div>
+  <button class="note-btn" onclick="toggleNote('s1')">✏ Note</button>
+  <div class="note-drawer" id="note-s1">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 1 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s1')">Save</button></div>
+    <textarea id="text-s1" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">01 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 2 — THE OPPORTUNITY
+════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="inner">
+    <div>
+      <div class="op-title">The <em>IRL economy</em><br>is here to stay.</div>
+    </div>
+    <div class="op-cards">
+      <div class="op-card">
+        <div class="op-card-num">01 — Regulation</div>
+        <div class="op-card-head">NYC short-term rental law reshaped the market</div>
+        <div class="op-card-body">70% drop in Airbnb listings. ~4,000 high-value properties removed. Owners with extraordinary spaces are actively seeking alternative income. We are that alternative.</div>
+      </div>
+      <div class="op-card">
+        <div class="op-card-num">02 — Wealth asset tax</div>
+        <div class="op-card-head">Proposed NYC millionaire asset tax creates urgency</div>
+        <div class="op-card-body">Wealthy families and family offices holding Manhattan properties they use two weeks a year face new pressure to monetize. We already onboarded our first family office property in late 2025. When this tax passes, our pipeline expands dramatically.</div>
+      </div>
+      <div class="op-card">
+        <div class="op-card-num">03 — The IRL Economy</div>
+        <div class="op-card-head">In-real-life is becoming an industry by itself</div>
+        <div class="op-card-body">The global corporate events market is $1.5T+. Brand activations up 43% YoY. Corporate retreats, team offsites, team buildings, private events, and production bookings are all accelerating — with brands shifting budget from digital to physical at a pace that won't reverse. Cocoon serves every category.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon" style="filter:brightness(0) invert(1); opacity:0.4;"></div>
+  <button class="note-btn" onclick="toggleNote('s2')">✏ Note</button>
+  <div class="note-drawer" id="note-s2">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 2 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s2')">Save</button></div>
+    <textarea id="text-s2" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num" style="color:rgba(255,255,255,0.3);">02 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 3 — THE PROBLEM
+════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="accent-bar"></div>
+  <div class="inner">
+    <div class="top">
+      <div class="section-label">The Problem</div>
+      <div class="slide-title" style="font-size:44px; max-width:640px;">The best spaces in New York stay locked.</div>
+      <div style="font-size:13px;color:var(--ink-soft);margin-top:6px;">Extraordinary private homes <em>and</em> design-forward commercial venues owned by landlords, family offices, and developers.</div>
+    </div>
+    <div class="prob-cols">
+      <div class="prob-col">
+        <div class="prob-col-label">Property Owners</div>
+        <div class="prob-col-head">Extraordinary spaces.<br>No way to safely monetize.</div>
+        <div class="prob-item">Not in the events business — no insurance frameworks, no hosting infrastructure</div>
+        <div class="prob-item">Liability risk keeps the best residential and commercial spaces off the market entirely</div>
+        <div class="prob-item">No time or expertise to manage bookings, on-site logistics, or vetting</div>
+        <div class="prob-item">Self-service platforms leave owners exposed — whether they're a homeowner or a family office</div>
+      </div>
+      <div class="prob-col">
+        <div class="prob-col-label">Brands & Productions</div>
+        <div class="prob-col-head">Premium demand.<br>No platform that can deliver.</div>
+        <div class="prob-item">Hotel ballrooms and commercial studios can't deliver unconventional, design-forward spaces</div>
+        <div class="prob-item">Peerspace/Giggster list the space and step aside — no accountability for high-stakes activations</div>
+        <div class="prob-item">$500K Fendi showroom requires security details, event production, private chefs, and someone accountable on day four — not a homeowner on Peerspace</div>
+        <div class="prob-item">The bigger the booking, the fewer viable options exist</div>
+      </div>
+    </div>
+    <div class="prob-bridge" style="flex-shrink:0; margin-top: -8px;">
+      <div class="prob-bridge-text">
+        Self-service platforms cannot bridge this gap. <span>The market needs a fully managed operator on both sides.</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s3')">✏ Note</button>
+  <div class="note-drawer" id="note-s3">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 3 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s3')">Save</button></div>
+    <textarea id="text-s3" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">03 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 4 — WHY NOW
+════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="accent-bar"></div>
+  <div class="inner">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Why Now</div>
+      <div class="slide-title" style="font-size:44px;">Four forces converging.</div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card featured">
+        <div class="why-tag">Regulatory shift</div>
+        <div class="why-head">NYC Airbnb law:<br>70% drop in listings</div>
+        <div class="why-body">~4,000 high-value properties removed from Airbnb. Premium rental platforms like Plum Guide and OneFineStay — which were marketing the exact spaces Cocoon targets — were hit hardest. Their displaced inventory is our pipeline.</div>
+        <div class="why-stat">~4,000</div>
+        <div class="why-stat-label" style="color:rgba(255,255,255,0.4);">Properties removed from Airbnb in NYC</div>
+      </div>
+      <div class="why-card">
+        <div class="why-tag">Wealth policy</div>
+        <div class="why-head">Proposed NYC asset tax creates a new pipeline</div>
+        <div class="why-body">Family offices holding trophy properties they rarely use face new incentives to monetize. We onboarded our first family office property in late 2025.</div>
+        <div class="why-stat">$1M+</div>
+        <div class="why-stat-label">Average value of target family office properties</div>
+      </div>
+      <div class="why-card">
+        <div class="why-tag">Demand side</div>
+        <div class="why-head">The IRL economy is accelerating across every category</div>
+        <div class="why-body">Brand activations up 43% YoY. Corporate retreats, offsite meetings, team buildings, private events, and event production all growing. The $1.5T+ corporate events market is shifting toward design-forward, non-hotel venues — and there is no dominant premium operator to serve it.</div>
+        <div class="why-stat">$1.5T+</div>
+        <div class="why-stat-label">Global corporate events market</div>
+      </div>
+      <div class="why-card">
+        <div class="why-tag">Global spread</div>
+        <div class="why-head">Short-term rental regulations spreading worldwide</div>
+        <div class="why-body">London, Madrid, Paris, Tokyo — similar regulatory pressure is creating identical market conditions in every major city. The Cocoon model is exportable.</div>
+        <div class="why-stat">5+</div>
+        <div class="why-stat-label">Major cities facing identical regulatory conditions</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s4')">✏ Note</button>
+  <div class="note-drawer" id="note-s4">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 4 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s4')">Save</button></div>
+    <textarea id="text-s4" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">04 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 5 — MARKET SIZE
+════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="accent-bar"></div>
+  <div class="inner">
+    <div style="display:flex;flex-direction:column;gap:28px;width:100%;">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="section-label">Market Size</div>
+        <div class="slide-title" style="font-size:44px;">A large market with no dominant operator.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:48px;flex:1;">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="market-row">
+            <div style="flex:1;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-mute);margin-bottom:6px;">TAM — Total Addressable Market</div>
+              <div class="market-bar tam"><span class="market-bar-label">$15B+ — Global private venue rental market</span></div>
+            </div>
+          </div>
+          <div class="market-row">
+            <div style="flex:1;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-mute);margin-bottom:6px;">SAM — Serviceable Addressable Market</div>
+              <div class="market-bar sam" style="width:72%;"><span class="market-bar-label">$2.4B — Premium venue market, US + key global cities</span></div>
+            </div>
+          </div>
+          <div class="market-row">
+            <div style="flex:1;">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-mute);margin-bottom:6px;">SOM — Serviceable Obtainable Market</div>
+              <div class="market-bar som" style="width:38%;"><span class="market-bar-label">$180M — NYC premium / managed segment (3–5 yr)</span></div>
+            </div>
+          </div>
+          <div class="market-note" style="margin-top:8px;">
+            <strong>No dominant player owns the managed premium segment.</strong> Peerspace and Giggster compete on volume and breadth — neither offers full management, curated inventory, or concierge. The institutional market (developer partnerships, family office properties) is entirely untapped.
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:20px;justify-content:center;">
+          <div>
+            <div class="market-aside-num tam">$15B+</div>
+            <div class="market-aside-label">Global private venue rental (TAM)</div>
+          </div>
+          <div style="height:1px;background:var(--rule);"></div>
+          <div>
+            <div class="market-aside-num sam">$2.4B</div>
+            <div class="market-aside-label">Premium US + global cities (SAM)</div>
+          </div>
+          <div style="height:1px;background:var(--rule);"></div>
+          <div>
+            <div class="market-aside-num som">$180M</div>
+            <div class="market-aside-label">NYC managed premium, 3–5 yr (SOM)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s5')">✏ Note</button>
+  <div class="note-drawer" id="note-s5">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 5 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s5')">Save</button></div>
+    <textarea id="text-s5" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">05 / 20</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+  SLIDE 6 — OUR SOLUTION
+════════════════════════════════════════════ -->
+<div class="slide" id="s6" style="background:var(--ink);">
+  <div style="flex:1;padding:52px 64px 80px;display:flex;flex-direction:column;gap:36px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label" style="color:var(--red);">Our Solution</div>
+      <div class="slide-title" style="color:var(--white);font-size:50px;max-width:700px;">The only fully managed marketplace for design-forward venues in NYC.</div>
+    </div>
+    <div class="col2" style="flex:1;gap:20px;">
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:20px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--red);">For Property Owners</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);line-height:1.2;letter-spacing:-0.01em;">We take over.<br>You approve and get paid.</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.45;padding-left:14px;border-left:2px solid var(--red);">Professional photography & curated listings</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.45;padding-left:14px;border-left:2px solid var(--red);">All booking communications handled</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.45;padding-left:14px;border-left:2px solid var(--red);">Dedicated Casa Manager on-site every event</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.45;padding-left:14px;border-left:2px solid var(--red);">Cleaning, maintenance, full insurance protocols</div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:32px;display:flex;flex-direction:column;gap:20px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--red);">For Booking Clients</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);line-height:1.2;letter-spacing:-0.01em;">Curated spaces.<br>One accountable partner.</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.45;padding-left:14px;border-left:2px solid var(--red);">Design-forward spaces unavailable anywhere else</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.45;padding-left:14px;border-left:2px solid var(--red);">Every booking has a Casa Manager on-site</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.45;padding-left:14px;border-left:2px solid var(--red);">Super Concierge: catering, photography, production</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.55);line-height:1.45;padding-left:14px;border-left:2px solid var(--red);">Accountability at every scale — $5K offsite to $500K activation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon" style="filter:brightness(0) invert(1);opacity:0.4;"></div>
+  <button class="note-btn" onclick="toggleNote('s6')">✏ Note</button>
+  <div class="note-drawer" id="note-s6">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 6 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s6')">Save</button></div>
+    <textarea id="text-s6" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num" style="color:rgba(255,255,255,0.3);">06 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 7 — PROPERTY ACQUISITION MODEL
+════════════════════════════════════════════ -->
+<div class="slide" id="s7" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Property Acquisition Model</div>
+      <div class="slide-title" style="font-size:42px;max-width:680px;">How we ascend the quality ladder.</div>
+    </div>
+    <div class="col3" style="flex:1;gap:16px;">
+      <!-- Tier 1 -->
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:rgba(26,26,26,0.15);"></div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--ink-mute);">Tier 1 · Proven</div>
+        <div style="font-size:19px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:var(--ink);">Private Owners &amp; Small Commercial</div>
+        <div style="font-size:12.5px;line-height:1.5;color:var(--ink-soft);">High-end residential homes and smaller commercial spaces owned by private landlords. Our original model — fully proven over 6 years.</div>
+        <div style="margin-top:4px;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:11.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">Casa Olympia, Casa Maxima, Casa Adrià</div>
+          <div style="font-size:11.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">Casa Janka (commercial)</div>
+        </div>
+        <div style="margin-top:auto;padding-top:12px;border-top:1px solid var(--rule);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--ink-mute);">Status</div>
+          <div style="font-size:12px;color:var(--ink);font-weight:500;margin-top:3px;">Core portfolio · 45 active properties</div>
+        </div>
+      </div>
+      <!-- Tier 2 -->
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:var(--red);opacity:0.6;"></div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--red);">Tier 2 · Growing</div>
+        <div style="font-size:19px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:var(--ink);">Family Offices &amp; Larger Private Commercial</div>
+        <div style="font-size:12.5px;line-height:1.5;color:var(--ink-soft);">Larger or more complex assets. Owners with multiple properties who want a professional operator. Higher-value spaces, larger bookings.</div>
+        <div style="margin-top:4px;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:11.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--red);">Casa Brutal and similar flagship properties</div>
+          <div style="font-size:11.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--red);">First family office property onboarded late 2025</div>
+        </div>
+        <div style="margin-top:auto;padding-top:12px;border-top:1px solid var(--rule);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--ink-mute);">Status</div>
+          <div style="font-size:12px;color:var(--ink);font-weight:500;margin-top:3px;">Proven and actively growing</div>
+        </div>
+      </div>
+      <!-- Tier 3 -->
+      <div style="background:var(--ink);border:1px solid transparent;border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:var(--red);"></div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--red);">Tier 3 · New Frontier</div>
+        <div style="font-size:19px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:var(--white);">Institutional &amp; Developer Partnerships</div>
+        <div style="font-size:12.5px;line-height:1.5;color:rgba(255,255,255,0.5);">Landmark spaces unlocked by Cocoon's track record. Only a professional operator with proven protocols can access this tier.</div>
+        <div style="margin-top:4px;display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:11.5px;color:rgba(255,255,255,0.45);padding-left:12px;border-left:2px solid var(--red);">Silverstein Properties — Fleet Tower, Brooklyn (in conversations)</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,0.45);padding-left:12px;border-left:2px solid var(--red);">Naftali Group — partnership in early stage</div>
+          <div style="font-size:11.5px;color:rgba(255,255,255,0.45);padding-left:12px;border-left:2px solid var(--red);">Corcoran Sunshine — luxury new development access</div>
+        </div>
+        <div style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.35);">Status</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.8);font-weight:500;margin-top:3px;">Active conversations · Self-service platforms cannot compete here</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s7')">✏ Note</button>
+  <div class="note-drawer" id="note-s7">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 7 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s7')">Save</button></div>
+    <textarea id="text-s7" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">07 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 8 — COMPETITIVE LANDSCAPE
+════════════════════════════════════════════ -->
+<div class="slide" id="s8" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="section-label">Competitive Landscape</div>
+        <div class="slide-title" style="font-size:42px;">No one does what we do.</div>
+      </div>
+    </div>
+    <!-- Table -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;">
+      <!-- Header -->
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;background:var(--ink);padding:12px 20px;gap:12px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.4);"></div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.6);text-align:center;">Managed<br>Operations</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.6);text-align:center;">Premium<br>Inventory</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.6);text-align:center;">Owner<br>Management</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.6);text-align:center;">Concierge<br>Services</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.6);text-align:center;">Institutional<br>Access</div>
+      </div>
+      <!-- Cocoon row -->
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;padding:14px 20px;gap:12px;background:rgba(245,64,41,0.06);border-bottom:1px solid var(--rule);align-items:center;">
+        <div style="font-size:13px;font-weight:700;color:var(--red);">Cocoon</div>
+        <div style="text-align:center;color:var(--red);font-size:18px;font-weight:700;">✓</div>
+        <div style="text-align:center;color:var(--red);font-size:18px;font-weight:700;">✓</div>
+        <div style="text-align:center;color:var(--red);font-size:18px;font-weight:700;">✓</div>
+        <div style="text-align:center;color:var(--red);font-size:18px;font-weight:700;">✓</div>
+        <div style="text-align:center;color:var(--red);font-size:18px;font-weight:700;">✓</div>
+      </div>
+      <!-- Competitors -->
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;padding:12px 20px;gap:12px;border-bottom:1px solid var(--rule);align-items:center;">
+        <div style="font-size:12.5px;font-weight:500;color:var(--ink);">Peerspace</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;padding:12px 20px;gap:12px;border-bottom:1px solid var(--rule);align-items:center;">
+        <div style="font-size:12.5px;font-weight:500;color:var(--ink);">Giggster</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;padding:12px 20px;gap:12px;border-bottom:1px solid var(--rule);align-items:center;">
+        <div style="font-size:12.5px;font-weight:500;color:var(--ink);">Splacer</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;padding:12px 20px;gap:12px;border-bottom:1px solid var(--rule);align-items:center;">
+        <div style="font-size:12.5px;font-weight:500;color:var(--ink);">Location Dept.</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✓</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;padding:12px 20px;gap:12px;border-bottom:1px solid var(--rule);align-items:center;">
+        <div style="font-size:12.5px;font-weight:500;color:var(--ink);">Pier59 / Sixth Floor</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✓</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;padding:12px 20px;gap:12px;border-bottom:1px solid var(--rule);align-items:center;">
+        <div style="font-size:12.5px;font-weight:500;color:var(--ink);">The K Agency</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✓</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+      </div>
+      <div style="display:grid;grid-template-columns:200px 1fr 1fr 1fr 1fr 1fr;padding:12px 20px;gap:12px;align-items:center;">
+        <div style="font-size:12.5px;font-weight:500;color:var(--ink);">Blace / Tag Venue</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">—</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+        <div style="text-align:center;color:var(--ink-mute);font-size:14px;">✗</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--ink-mute);font-style:italic;">The only company that fully serves both sides of the market with premium, managed inventory.</div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s8')">✏ Note</button>
+  <div class="note-drawer" id="note-s8">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 8 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s8')">Save</button></div>
+    <textarea id="text-s8" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">08 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 9 — HOW WE WORK
+════════════════════════════════════════════ -->
+<div class="slide" id="s9" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">How We Work</div>
+      <div class="slide-title" style="font-size:42px;">Two journeys. One platform.</div>
+    </div>
+    <div class="col2" style="flex:1;gap:24px;">
+      <!-- Owner Journey -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-mute);">Property Owner Journey</div>
+        <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:var(--white);">1</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Onboarding, photography & campaigns</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">We photograph, write listings, set pricing, and run marketing campaigns. Our Casa Manager creates fresh content after each booking.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:var(--white);">2</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Booking management</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">We handle all inquiries, vetting, contracts, and scheduling.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:var(--white);">3</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Event day + cleaning</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Casa Manager on-site. Professional cleaning after every event. Owner is never involved.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:var(--white);">4</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Post-event & payment</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Cleaning, damage check, payout. Owner receives monthly report.</div></div>
+          </div>
+        </div>
+        <div style="background:var(--cream-deep);border-radius:8px;padding:14px 18px;font-size:12px;color:var(--ink-soft);">
+          <strong style="color:var(--ink);">Result:</strong> Passive income from a space they already own. No effort, no liability, no surprises.
+        </div>
+      </div>
+      <!-- Client Journey -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-mute);">Booking Client Journey</div>
+        <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:var(--white);">1</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Discovery — including our private portfolio</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Browse cocoonflexspaces.com or access our invite-only Discovery Portfolio — extraordinary unlisted spaces exclusively for vetted event production companies and agencies.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:var(--white);">2</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Proposal & booking</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Custom proposal: space, catering, photography, production — all-in.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:var(--white);">3</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Event day</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Casa Manager manages the space. Client focuses on their event.</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:flex-start;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:700;color:var(--white);">4</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Repeat & refer</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">99% 5-star reviews. The majority of large bookings come from referrals.</div></div>
+          </div>
+        </div>
+        <div style="background:rgba(245,64,41,0.07);border-radius:8px;padding:14px 18px;font-size:12px;color:var(--ink-soft);">
+          <strong style="color:var(--ink);">Result:</strong> An extraordinary space that works, with one call to make it happen.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s9')">✏ Note</button>
+  <div class="note-drawer" id="note-s9">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 9 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s9')">Save</button></div>
+    <textarea id="text-s9" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">09 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 10 — TRACTION TIMELINE
+════════════════════════════════════════════ -->
+<div class="slide" id="s10" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Traction</div>
+      <div class="slide-title" style="font-size:42px;">7 years. Entirely organic.</div>
+    </div>
+    <!-- Timeline -->
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:0;position:relative;">
+      <div style="position:absolute;left:88px;top:0;bottom:0;width:2px;background:var(--rule);"></div>
+      <div style="display:flex;gap:24px;align-items:flex-start;padding:10px 0;">
+        <div style="width:88px;text-align:right;font-size:11px;font-weight:700;color:var(--ink-mute);padding-right:24px;padding-top:2px;flex-shrink:0;">2019–20</div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:4px;position:relative;z-index:1;"></div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Founded June 2019 · First 8 properties · $1M revenue year 1</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Launched with residential-only model. Proved concept in first 12 months.</div></div>
+      </div>
+      <div style="display:flex;gap:24px;align-items:flex-start;padding:10px 0;">
+        <div style="width:88px;text-align:right;font-size:11px;font-weight:700;color:var(--ink-mute);padding-right:24px;padding-top:2px;flex-shrink:0;">2022</div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:4px;position:relative;z-index:1;"></div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--ink);">$1.51M revenue · Lego, Fendi, D&G</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">First major brand clients. Super Concierge launched. Expanded to commercial spaces.</div></div>
+      </div>
+      <div style="display:flex;gap:24px;align-items:flex-start;padding:10px 0;">
+        <div style="width:88px;text-align:right;font-size:11px;font-weight:700;color:var(--ink-mute);padding-right:24px;padding-top:2px;flex-shrink:0;">2023</div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--ink-mute);flex-shrink:0;margin-top:4px;position:relative;z-index:1;"></div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--ink);">Strategic transition · Platform build begins</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Deliberately reduced marketplace dependency. Built proprietary SEO/PPC + booking engine. Temporary revenue dip by design.</div></div>
+      </div>
+      <div style="display:flex;gap:24px;align-items:flex-start;padding:10px 0;">
+        <div style="width:88px;text-align:right;font-size:11px;font-weight:700;color:var(--ink-mute);padding-right:24px;padding-top:2px;flex-shrink:0;">2024</div>
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:4px;position:relative;z-index:1;"></div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--ink);">First profitable year · +$98K net operating income</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Platform live. Third-party fees cut 40%. Direct bookings up 31%.</div></div>
+      </div>
+      <div style="display:flex;gap:24px;align-items:flex-start;padding:10px 0;">
+        <div style="width:88px;text-align:right;font-size:11px;font-weight:700;color:var(--red);padding-right:24px;padding-top:2px;flex-shrink:0;">2025</div>
+        <div style="width:12px;height:12px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:3px;position:relative;z-index:1;box-shadow:0 0 0 3px rgba(245,64,41,0.2);"></div>
+        <div><div style="font-size:14px;font-weight:700;color:var(--red);">Record year · $1.73M revenue · $238K operating profit</div><div style="font-size:12px;color:var(--ink-soft);margin-top:2px;">Platform fees down 75% vs 2022. First family office property. First institutional developer conversations. Fendi $500K activation in pipeline.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s10')">✏ Note</button>
+  <div class="note-drawer" id="note-s10">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 10 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s10')">Save</button></div>
+    <textarea id="text-s10" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">10 / 20</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+  SLIDE 11 — OUR ACCOMPLISHMENTS
+════════════════════════════════════════════ -->
+<div class="slide" id="s11" style="background:var(--ink);">
+  <div style="flex:1;padding:52px 64px 80px;display:flex;flex-direction:column;gap:32px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label" style="color:var(--red);">Our Accomplishments</div>
+      <div class="slide-title" style="color:var(--white);font-size:44px;">Seven years. No outside capital.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;flex:1;">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:42px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">$1.73M</div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);">2025 Revenue (record)</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:42px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">$238K</div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);">2025 Operating Profit</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:42px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">49%</div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);">Gross Margin</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:42px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">45</div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);">Active Properties</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:42px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">99%</div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);">5-Star Reviews</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:42px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">31%</div>
+        <div style="font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);">Direct Bookings (+350% vs 2021)</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:rgba(255,255,255,0.35);">Notable clients</div>
+      <div style="display:flex;gap:10px;">
+        <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Lego</span>
+        <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Fendi</span>
+        <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Dolce &amp; Gabbana</span>
+        <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Delta × Amex</span>
+        <span style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Djerf Avenue</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon" style="filter:brightness(0) invert(1);opacity:0.4;"></div>
+  <button class="note-btn" onclick="toggleNote('s11')">✏ Note</button>
+  <div class="note-drawer" id="note-s11">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 11 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s11')">Save</button></div>
+    <textarea id="text-s11" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num" style="color:rgba(255,255,255,0.3);">11 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 12 — CASE STUDIES
+════════════════════════════════════════════ -->
+<div class="slide" id="s12" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Case Studies</div>
+      <div class="slide-title" style="font-size:42px;">The bookings are getting larger.</div>
+    </div>
+    <div class="col3" style="flex:1;gap:16px;">
+      <!-- Casa Maxima -->
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="height:6px;background:var(--ink);"></div>
+        <div style="padding:22px 22px 20px;display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-mute);">Casa Maxima</div>
+          <div style="font-size:16px;font-weight:700;color:var(--ink);line-height:1.2;letter-spacing:-0.01em;">Lego · Brand Activation</div>
+          <div style="font-size:12.5px;line-height:1.5;color:var(--ink-soft);flex:1;">Multi-day brand activation for Lego's creative team. Space, on-site management, and full concierge services. Repeat client — returned for two additional bookings.</div>
+          <div style="border-top:1px solid var(--rule);padding-top:12px;display:flex;justify-content:space-between;align-items:baseline;">
+            <div>
+              <div style="font-size:22px;font-weight:700;color:var(--red);letter-spacing:-0.03em;">~$98K</div>
+              <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-mute);font-weight:500;">Booking value (2024)</div>
+            </div>
+            <span style="font-size:11px;font-weight:600;color:var(--teal);">Repeat client</span>
+          </div>
+        </div>
+      </div>
+      <!-- Casa Olympia -->
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="height:6px;background:var(--red);"></div>
+        <div style="padding:22px 22px 20px;display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-mute);">Casa Olympia</div>
+          <div style="font-size:16px;font-weight:700;color:var(--ink);line-height:1.2;letter-spacing:-0.01em;">Delta × Amex · Executive Retreat</div>
+          <div style="font-size:12.5px;line-height:1.5;color:var(--ink-soft);flex:1;">Multi-day executive event for Delta Air Lines and American Express. High-profile athlete property — owner signed with Cocoon specifically because no other platform offered the trust protocols required.</div>
+          <div style="border-top:1px solid var(--rule);padding-top:12px;display:flex;justify-content:space-between;align-items:baseline;">
+            <div>
+              <div style="font-size:22px;font-weight:700;color:var(--red);letter-spacing:-0.03em;">$250K</div>
+              <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink-mute);font-weight:500;">Booking value (2025)</div>
+            </div>
+            <span style="font-size:11px;font-weight:600;color:var(--red);">Flagship case</span>
+          </div>
+        </div>
+      </div>
+      <!-- Fendi pipeline -->
+      <div style="background:var(--ink);border:1px solid transparent;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;">
+        <div style="height:6px;background:var(--red);"></div>
+        <div style="padding:22px 22px 20px;display:flex;flex-direction:column;gap:10px;flex:1;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:rgba(255,255,255,0.35);">Casa Duende · Pipeline</div>
+          <div style="font-size:16px;font-weight:700;color:var(--white);line-height:1.2;letter-spacing:-0.01em;">Fendi · NYC Fashion Week Showroom</div>
+          <div style="font-size:12.5px;line-height:1.5;color:rgba(255,255,255,0.5);flex:1;">7-day exclusive showroom for Fendi's top 2% global clientele during NYC Fashion Week. Space, security, event production, private chefs, full concierge, on-site management. A booking of this scale requires institutional-grade operations — self-service platforms cannot touch it.</div>
+          <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:12px;display:flex;justify-content:space-between;align-items:baseline;">
+            <div>
+              <div style="font-size:22px;font-weight:700;color:var(--red);letter-spacing:-0.03em;">~$500K</div>
+              <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.3);font-weight:500;">Tracking value (in pipeline)</div>
+            </div>
+            <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);">Advanced conversations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s12')">✏ Note</button>
+  <div class="note-drawer" id="note-s12">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 12 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s12')">Save</button></div>
+    <textarea id="text-s12" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">12 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 13 — REVENUE MODEL & UNIT ECONOMICS
+════════════════════════════════════════════ -->
+<div class="slide" id="s13" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Revenue Model</div>
+      <div class="slide-title" style="font-size:42px;">Multiple streams. Expanding margins.</div>
+    </div>
+    <div class="col2" style="flex:1;gap:24px;">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--ink-mute);">2025 Revenue Mix</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;"></div>
+            <div style="flex:1;font-size:13px;color:var(--ink);">Space Rentals</div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);">$1.32M <span style="font-weight:400;color:var(--ink-mute);">76%</span></div>
+          </div>
+          <div style="height:6px;border-radius:3px;background:var(--cream-deep);overflow:hidden;"><div style="width:76%;height:100%;background:var(--red);border-radius:3px;"></div></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;"></div>
+            <div style="flex:1;font-size:13px;color:var(--ink);">Casa Manager</div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);">$144K <span style="font-weight:400;color:var(--ink-mute);">8%</span></div>
+          </div>
+          <div style="height:6px;border-radius:3px;background:var(--cream-deep);overflow:hidden;"><div style="width:8%;height:100%;background:var(--teal);border-radius:3px;"></div></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:6px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--ink-mute);flex-shrink:0;"></div>
+            <div style="flex:1;font-size:13px;color:var(--ink);">Other Services (cleaning, hospitality, other)</div>
+            <div style="font-size:13px;font-weight:700;color:var(--ink);">$261K <span style="font-weight:400;color:var(--ink-mute);">15%</span></div>
+          </div>
+          <div style="height:6px;border-radius:3px;background:var(--cream-deep);overflow:hidden;"><div style="width:15%;height:100%;background:var(--ink-mute);border-radius:3px;"></div></div>
+        </div>
+        <div style="background:var(--cream-deep);border-radius:8px;padding:14px 18px;margin-top:4px;">
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Platform fees paid to Peerspace/Giggster/Splacer fell from <strong style="color:var(--ink);">~$110K in 2022</strong> to <strong style="color:var(--red);">~$27K in 2025</strong> — a 75% reduction. These are now direct bookings through our own platform.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--ink-mute);">Unit Economics (per booking)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;color:var(--ink);">Avg. space rental booking</div>
+            <div style="font-size:15px;font-weight:700;color:var(--ink);">~$8,200</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;color:var(--ink);">Concierge attach rate</div>
+            <div style="font-size:15px;font-weight:700;color:var(--ink);">~35%</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;color:var(--ink);">Avg. all-in w/ concierge</div>
+            <div style="font-size:15px;font-weight:700;color:var(--red);">~$14,500</div>
+          </div>
+          <div style="background:rgba(245,64,41,0.06);border:1px solid rgba(245,64,41,0.2);border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;color:var(--ink);">Recent Super Concierge avg ticket <span style="font-size:11px;color:var(--red);font-weight:600;">↑ growing</span></div>
+            <div style="font-size:15px;font-weight:700;color:var(--red);">$4,500</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;color:var(--ink);">Large activation ceiling</div>
+            <div style="font-size:15px;font-weight:700;color:var(--red);">$250K–500K+</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--rule);border-radius:8px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-size:13px;color:var(--ink);">Gross margin (2025)</div>
+            <div style="font-size:15px;font-weight:700;color:var(--ink);">49%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s13')">✏ Note</button>
+  <div class="note-drawer" id="note-s13">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 13 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s13')">Save</button></div>
+    <textarea id="text-s13" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">13 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 14 — FINANCIAL SNAPSHOT
+════════════════════════════════════════════ -->
+<div class="slide" id="s14" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Financial Snapshot</div>
+      <div class="slide-title" style="font-size:42px;">Profitable and accelerating.</div>
+    </div>
+    <!-- P&L table -->
+    <div style="border:1px solid var(--rule);border-radius:10px;overflow:hidden;flex-shrink:0;">
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr 1fr 1fr 1fr;background:var(--ink);padding:11px 20px;gap:8px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.4);">Metric</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.6);text-align:right;">2021</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.6);text-align:right;">2022</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.6);text-align:right;">2023</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:rgba(255,255,255,0.6);text-align:right;">2024</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--red);text-align:right;">2025</div>
+      </div>
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr 1fr 1fr 1fr;padding:11px 20px;gap:8px;border-top:1px solid var(--rule);">
+        <div style="font-size:12.5px;color:var(--ink-soft);">Revenue</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">$1.02M</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">$1.51M</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">$1.45M</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">$1.24M</div>
+        <div style="font-size:12.5px;text-align:right;font-weight:700;color:var(--red);">$1.73M</div>
+      </div>
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr 1fr 1fr 1fr;padding:11px 20px;gap:8px;border-top:1px solid var(--rule);background:rgba(245,242,232,0.5);">
+        <div style="font-size:12.5px;color:var(--ink-soft);">Gross Profit</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">$564K</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">$727K</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">$724K</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">$673K</div>
+        <div style="font-size:12.5px;text-align:right;font-weight:700;color:var(--red);">$843K</div>
+      </div>
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr 1fr 1fr 1fr;padding:11px 20px;gap:8px;border-top:1px solid var(--rule);">
+        <div style="font-size:12.5px;color:var(--ink-soft);">Gross Margin</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">55%</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">48%</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">50%</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink);">54%</div>
+        <div style="font-size:12.5px;text-align:right;font-weight:700;color:var(--red);">49%</div>
+      </div>
+      <div style="display:grid;grid-template-columns:160px 1fr 1fr 1fr 1fr 1fr;padding:11px 20px;gap:8px;border-top:1px solid var(--rule);background:rgba(245,242,232,0.5);">
+        <div style="font-size:12.5px;color:var(--ink-soft);">Net Op. Income</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink-mute);">−$107K</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink-mute);">−$103K</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--ink-mute);">−$58K</div>
+        <div style="font-size:12.5px;text-align:right;color:var(--teal);font-weight:600;">+$98K</div>
+        <div style="font-size:12.5px;text-align:right;font-weight:700;color:var(--red);">+$238K</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div style="background:rgba(39,84,83,0.08);border:1px solid rgba(39,84,83,0.2);border-radius:8px;padding:14px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--teal);margin-bottom:6px;">2023–24 Revenue Dip — Intentional</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Cocoon was building its proprietary platform and SEO/PPC engine to eliminate marketplace dependency. 2025 is year one of the payoff: +34% revenue growth, platform fees down 75%.</div>
+      </div>
+      <div style="background:rgba(245,64,41,0.06);border:1px solid rgba(245,64,41,0.15);border-radius:8px;padding:14px 18px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--red);margin-bottom:6px;">2025 Net Income Note</div>
+        <div style="font-size:12px;color:var(--ink-soft);line-height:1.5;">Net income was suppressed by $222K one-time "other expense." Operating profit of $238K is the investor-facing number — the business is structurally profitable.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s14')">✏ Note</button>
+  <div class="note-drawer" id="note-s14">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 14 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s14')">Save</button></div>
+    <textarea id="text-s14" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">14 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 15 — FINANCIAL PROJECTIONS
+════════════════════════════════════════════ -->
+<div class="slide" id="s15" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Financial Projections</div>
+      <div class="slide-title" style="font-size:42px;">The next three years.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;flex:1;">
+      <!-- 2026 -->
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--ink-mute);">2026 — Year of Investment</div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-0.04em;color:var(--ink);line-height:1;">$2.2M</div>
+        <div style="font-size:11px;color:var(--ink-mute);">Revenue target</div>
+        <div style="height:1px;background:var(--rule);"></div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:12.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">CEO hire + platform investment</div>
+          <div style="font-size:12.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">AI-OS development begins</div>
+          <div style="font-size:12.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">Institutional pipeline activation</div>
+          <div style="font-size:12.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">Fendi + pipeline converts</div>
+        </div>
+      </div>
+      <!-- 2027 -->
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:var(--red);">2027 — Scale</div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">$3.5M</div>
+        <div style="font-size:11px;color:var(--ink-mute);">Revenue target</div>
+        <div style="height:1px;background:var(--rule);"></div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:12.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--red);">AI-OS operational — internal efficiencies</div>
+          <div style="font-size:12.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--red);">65+ active properties</div>
+          <div style="font-size:12.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--red);">Institutional tier properties live</div>
+          <div style="font-size:12.5px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--red);">Concierge attach rate expands</div>
+        </div>
+      </div>
+      <!-- 2028 -->
+      <div style="background:var(--ink);border:1px solid transparent;border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:14px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:rgba(255,255,255,0.4);">2028 — Expansion</div>
+        <div style="font-size:36px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">$6M+</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);">Revenue target</div>
+        <div style="height:1px;background:rgba(255,255,255,0.1);"></div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="font-size:12.5px;color:rgba(255,255,255,0.45);padding-left:12px;border-left:2px solid var(--red);">Second market launch (LA or Miami)</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,0.45);padding-left:12px;border-left:2px solid var(--red);">100+ properties under management</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,0.45);padding-left:12px;border-left:2px solid var(--red);">National brand relationships at scale</div>
+          <div style="font-size:12.5px;color:rgba(255,255,255,0.45);padding-left:12px;border-left:2px solid var(--red);">Platform as licensing opportunity</div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:11.5px;color:var(--ink-mute);font-style:italic;">Projections are forward-looking estimates. 2026 assumes $2M raise deployed H2 2026.</div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s15')">✏ Note</button>
+  <div class="note-drawer" id="note-s15">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 15 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s15')">Save</button></div>
+    <textarea id="text-s15" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">15 / 20</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+  SLIDE 16 — OUR STRATEGY
+════════════════════════════════════════════ -->
+<div class="slide" id="s16" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Our Strategy</div>
+      <div class="slide-title" style="font-size:42px;">Four moves that compound.</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;">
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--red);">Move 1</div>
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:var(--ink);">Ascend the property tier ladder</div>
+        <div style="font-size:12px;line-height:1.5;color:var(--ink-soft);">Private residences → family offices → institutional developers. Silverstein, Naftali, and Corcoran Sunshine are the beachhead. Higher-value properties unlock larger bookings.</div>
+        <div style="margin-top:auto;font-size:11px;font-weight:600;color:var(--red);">→ Larger spaces = larger activations</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--red);">Move 2</div>
+          <span style="font-size:9px;font-weight:700;background:rgba(245,64,41,0.1);color:var(--red);border-radius:100px;padding:2px 8px;text-transform:uppercase;letter-spacing:0.1em;">Live · Stage 1</span>
+        </div>
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:var(--ink);">AI-first operating system</div>
+        <div style="font-size:12px;line-height:1.5;color:var(--ink-soft);">Already in first stage with strong early results — increasing revenue per booking and reducing costs. Automates proposals, scheduling, and vendor coordination. Scales to 2× properties with the same team.</div>
+        <div style="margin-top:auto;font-size:11px;font-weight:600;color:var(--red);">→ Leverage without headcount</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--red);">Move 3</div>
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:var(--ink);">Scarcity by design + predictable income</div>
+        <div style="font-size:12px;line-height:1.5;color:var(--ink-soft);">Cap at 200 properties per city to preserve quality. Add recurring revenue: property boost placements, marketplace membership, and access subscriptions — predictable income on top of transactional.</div>
+        <div style="margin-top:auto;font-size:11px;font-weight:600;color:var(--red);">→ Recurring revenue layer</div>
+      </div>
+      <div style="background:var(--ink);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:10px;">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.16em;color:var(--red);">Move 4</div>
+        <div style="font-size:16px;font-weight:700;letter-spacing:-0.02em;line-height:1.2;color:var(--white);">Monetize the Discovery Portfolio</div>
+        <div style="font-size:12px;line-height:1.5;color:rgba(255,255,255,0.5);">Institutional venues pay to belong to the private Discovery Portfolio. Event production companies pay for curated access. A private marketplace within the marketplace — its own revenue layer.</div>
+        <div style="margin-top:auto;font-size:11px;font-weight:600;color:var(--red);">→ New B2B revenue stream</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s16')">✏ Note</button>
+  <div class="note-drawer" id="note-s16">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 16 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s16')">Save</button></div>
+    <textarea id="text-s16" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">16 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 17 — LEADERSHIP
+════════════════════════════════════════════ -->
+<div class="slide" id="s17" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">Leadership</div>
+      <div class="slide-title" style="font-size:42px;">The team behind it.</div>
+    </div>
+    <div class="col2" style="flex:1;gap:24px;">
+      <!-- Eduard -->
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--cream-deep);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.1em;">Photo</div>
+          <div>
+            <div style="font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;">Eduard Monteagudo</div>
+            <div style="font-size:12px;font-weight:500;color:var(--red);margin-top:3px;">Founder & CEO</div>
+          </div>
+        </div>
+        <div style="font-size:13px;line-height:1.55;color:var(--ink-soft);">Founded Cocoon in 2020. Built the business from zero to $1.73M revenue and first profitability entirely without outside capital. Architect of the managed marketplace model, the Super Concierge layer, and the owned-platform strategy.</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+          <div style="font-size:12px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">6 years operating Cocoon — every function, every system</div>
+          <div style="font-size:12px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">Led all institutional conversations (Silverstein, Naftali, Corcoran)</div>
+          <div style="font-size:12px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">Closed $250K–500K activations personally</div>
+        </div>
+      </div>
+      <!-- Sokki -->
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--cream-deep);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.1em;">Photo</div>
+          <div>
+            <div style="font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;">Sokki (Chen) Olshan</div>
+            <div style="font-size:12px;font-weight:500;color:var(--red);margin-top:3px;">CEO Candidate · Prospective Minority Partner</div>
+          </div>
+        </div>
+        <div style="font-size:13px;line-height:1.55;color:var(--ink-soft);">If Sokki joins Cocoon, she will buy into the business on her path to becoming CEO — becoming a minority partner with skin in the game from day one.</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
+          <div style="font-size:12px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">VP Research Strategy, GLG (8 years)</div>
+          <div style="font-size:12px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">Sr. Manager New Business, Samsung Electronics America</div>
+          <div style="font-size:12px;color:var(--ink-soft);padding-left:12px;border-left:2px solid var(--rule);">Strategy Consultant, Altman Vilandrie & Co. (M&A, valuations)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s17')">✏ Note</button>
+  <div class="note-drawer" id="note-s17">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 17 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s17')">Save</button></div>
+    <textarea id="text-s17" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">17 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 18 — THE ASK
+════════════════════════════════════════════ -->
+<div class="slide" id="s18" style="background:var(--ink);">
+  <div style="flex:1;padding:52px 64px 80px;display:flex;gap:64px;align-items:stretch;">
+    <!-- Left -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:28px;justify-content:center;">
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.4);margin-bottom:16px;">The Ask</div>
+        <div style="font-size:60px;font-weight:700;letter-spacing:-0.04em;line-height:1;color:var(--white);">$2M</div>
+        <div style="font-size:18px;font-weight:500;color:var(--red);margin-top:8px;letter-spacing:-0.01em;">Convertible Note · Angel Round</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:6px;">Final raise amount TBD — to be confirmed with incoming CEO</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+          <div style="font-size:13px;color:rgba(255,255,255,0.5);">Instrument</div>
+          <div style="font-size:13px;font-weight:600;color:var(--white);">Convertible Note</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+          <div style="font-size:13px;color:rgba(255,255,255,0.5);">Valuation Cap</div>
+          <div style="font-size:13px;font-weight:600;color:var(--white);">TBD</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
+          <div style="font-size:13px;color:rgba(255,255,255,0.5);">Discount</div>
+          <div style="font-size:13px;font-weight:600;color:var(--white);">20%</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:12px 0;">
+          <div style="font-size:13px;color:rgba(255,255,255,0.5);">Stage</div>
+          <div style="font-size:13px;font-weight:600;color:var(--white);">Seed / Angel · Year 6 · Profitable</div>
+        </div>
+      </div>
+    </div>
+    <!-- Right -->
+    <div style="width:340px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;justify-content:center;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.4);">Use of Funds</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:20px;font-weight:700;color:var(--red);width:40px;flex-shrink:0;">50%</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--white);">AI-First OS Development</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,0.4);margin-top:2px;">Build the operating system that scales Cocoon without scaling headcount</div>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:16px 18px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:20px;font-weight:700;color:var(--red);width:40px;flex-shrink:0;">50%</div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--white);">Tier A Talent</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,0.4);margin-top:2px;">Head of Growth · Tech Lead · Senior Ops · CEO search</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon" style="filter:brightness(0) invert(1);opacity:0.4;"></div>
+  <button class="note-btn" onclick="toggleNote('s18')">✏ Note</button>
+  <div class="note-drawer" id="note-s18">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 18 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s18')">Save</button></div>
+    <textarea id="text-s18" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num" style="color:rgba(255,255,255,0.3);">18 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 19 — WHAT'S NEXT
+════════════════════════════════════════════ -->
+<div class="slide" id="s19" style="background:var(--cream);">
+  <div class="accent-bar"></div>
+  <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="section-label">What's Next</div>
+      <div class="slide-title" style="font-size:42px;">Three decisions to make today.</div>
+    </div>
+    <div class="col3" style="flex:1;gap:16px;">
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:32px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">01</div>
+        <div style="font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;">Join the round</div>
+        <div style="font-size:12.5px;line-height:1.5;color:var(--ink-soft);">$2M convertible note. 20% discount. You're backing a profitable, 6-year-old business with proven traction and a clear institutional growth path — not a bet on an unproven idea.</div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:32px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">02</div>
+        <div style="font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;">Make an introduction</div>
+        <div style="font-size:12.5px;line-height:1.5;color:var(--ink-soft);">Know a brand CMO, a developer with underutilized spaces, or another angel who should be in this round? We convert warm introductions into meaningful revenue and partnership.</div>
+      </div>
+      <div style="background:var(--ink);border-radius:10px;padding:28px;display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:32px;font-weight:700;letter-spacing:-0.04em;color:var(--red);line-height:1;">03</div>
+        <div style="font-size:17px;font-weight:700;color:var(--white);letter-spacing:-0.01em;line-height:1.2;">Use a Cocoon space</div>
+        <div style="font-size:12.5px;line-height:1.5;color:rgba(255,255,255,0.5);">The best way to understand what we've built is to experience it. Host your next team offsite, client dinner, or product launch in a Cocoon space. We'll handle everything.</div>
+      </div>
+    </div>
+    <div style="background:rgba(245,64,41,0.07);border:1px solid rgba(245,64,41,0.15);border-radius:8px;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-size:13px;color:var(--ink);">Ready to talk?</div>
+      <div style="font-size:14px;font-weight:600;color:var(--red);">eduard@cocoonflexspaces.com</div>
+    </div>
+  </div>
+  <div class="slide-logo"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></div>
+  <button class="note-btn" onclick="toggleNote('s19')">✏ Note</button>
+  <div class="note-drawer" id="note-s19">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 19 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s19')">Save</button></div>
+    <textarea id="text-s19" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num">19 / 20</div>
+</div>
+
+<!-- ════════════════════════════════════════════
+  SLIDE 20 — THANK YOU
+════════════════════════════════════════════ -->
+<div class="slide" id="s20" style="background:var(--red);flex-direction:row;">
+  <div style="width:480px;flex-shrink:0;background:var(--red);padding:64px 52px;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:2;">
+    <div>
+      <img src="img/cocoon/mark-128.png" alt="Cocoon mark" style="height:48px;filter:brightness(0) invert(1);opacity:0.9;">
+      <img src="img/cocoon/wordmark-320.png" alt="cocoon" style="height:20px;margin-top:10px;filter:brightness(0) invert(1);opacity:0.85;">
+    </div>
+    <div>
+      <div style="font-size:48px;font-weight:700;letter-spacing:-0.03em;line-height:1;color:var(--cream);">Thank you.</div>
+      <div style="font-size:15px;color:rgba(245,242,232,0.65);margin-top:16px;line-height:1.55;">Questions, diligence, or just want to see a space — we're ready.</div>
+    </div>
+    <div style="padding-top:32px;border-top:1px solid rgba(245,242,232,0.2);">
+      <div style="font-size:11px;color:rgba(245,242,232,0.5);line-height:2.2;">
+        <span style="color:rgba(245,242,232,0.85);font-weight:500;">Eduard Monteagudo</span><br>
+        Founder &amp; CEO, Cocoon Flex Spaces<br>
+        <span style="color:rgba(245,242,232,0.85);">eduard@cocoonflexspaces.com</span><br>
+        cocoonflexspaces.com
+      </div>
+    </div>
+  </div>
+  <div style="flex:1;background:#0d0d0d;position:relative;overflow:hidden;">
+    <!-- VIDEO: drop your .mp4 into img/ and update the src below -->
+    <!-- <video src="img/cocoon-hero.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;"></video> -->
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="28" fill="rgba(245,64,41,0.15)"/><polygon points="22,18 42,28 22,38" fill="rgba(245,64,41,0.7)"/></svg>
+      <div style="font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);">Video placeholder</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.15);">Save your .mp4 as img/cocoon-hero.mp4<br>then uncomment the &lt;video&gt; tag above</div>
+    </div>
+  </div>
+  <button class="note-btn" onclick="toggleNote('s20')">✏ Note</button>
+  <div class="note-drawer" id="note-s20">
+    <div class="note-drawer-row"><span class="note-drawer-label">Slide 20 — V2 Notes</span><button class="note-save-btn" onclick="saveNote('s20')">Save</button></div>
+    <textarea id="text-s20" placeholder="Type your notes here…"></textarea>
+  </div>
+  <div class="slide-num" style="color:rgba(245,242,232,0.3);">20 / 20</div>
+</div>
+
+</body>
+</html>
+
+
+
+</div>
+
+<style>
+/* ─── NAV CHROME ─── */
+#nav-dots {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 9999;
+  align-items: center;
+}
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  border: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+.nav-dot.active {
+  background: #fff;
+  transform: scale(1.4);
+}
+.nav-dot:hover { background: rgba(255,255,255,0.6); }
+
+#nav-arrows {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none;
+  z-index: 9999;
+}
+.nav-arrow {
+  pointer-events: all;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.7);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s, opacity 0.2s;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+body:hover .nav-arrow { opacity: 1; }
+.nav-arrow:hover { background: rgba(255,255,255,0.18); }
+.nav-arrow:disabled { opacity: 0 !important; cursor: default; }
+
+#slide-counter {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+body:hover #slide-counter { opacity: 1; }
+</style>
+
+<!-- NAV DOTS -->
+<div id="nav-dots"></div>
+
+<!-- ARROW BUTTONS -->
+<div id="nav-arrows">
+  <button class="nav-arrow" id="btn-prev" onclick="navigate(-1)">&#8592;</button>
+  <button class="nav-arrow" id="btn-next" onclick="navigate(1)">&#8594;</button>
+</div>
+
+<!-- SLIDE COUNTER -->
+<div id="slide-counter"></div>
+
+<button class="export-btn" id="export-btn">📋 Notes</button>
+
+<script>
+// ─── PRESENTATION ENGINE ───
+const slides = Array.from(document.querySelectorAll('.slide'));
+const TOTAL = slides.length;
+let current = 0;
+let animating = false;
+
+// Build dots
+const dotsContainer = document.getElementById('nav-dots');
+slides.forEach(function(_, i) {
+  var d = document.createElement('button');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.title = 'Slide ' + (i+1);
+  d.onclick = function() { goTo(i); };
+  dotsContainer.appendChild(d);
+});
+
+function updateChrome(idx) {
+  document.querySelectorAll('.nav-dot').forEach(function(d, i) {
+    d.classList.toggle('active', i === idx);
+  });
+  document.getElementById('slide-counter').textContent = (idx+1) + ' / ' + TOTAL;
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === TOTAL - 1;
+}
+
+function goTo(idx, dir) {
+  if (idx === current || animating || idx < 0 || idx >= TOTAL) return;
+  animating = true;
+  var direction = dir !== undefined ? dir : (idx > current ? 1 : -1);
+  var prev = current;
+  current = idx;
+
+  var leaving = slides[prev];
+  var entering = slides[current];
+
+  // Set up entering slide off-screen (no transition)
+  entering.classList.remove('active', 'exit-left', 'exit-right', 'enter-left', 'enter-right');
+  entering.classList.add(direction > 0 ? 'enter-right' : 'enter-left');
+
+  // Force reflow
+  entering.getBoundingClientRect();
+
+  // Animate leaving slide out
+  leaving.classList.remove('active');
+  leaving.classList.add(direction > 0 ? 'exit-left' : 'exit-right');
+
+  // Animate entering slide in
+  entering.classList.remove('enter-right', 'enter-left');
+  entering.classList.add('active');
+
+  updateChrome(current);
+
+  setTimeout(function() {
+    leaving.classList.remove('exit-left', 'exit-right', 'active');
+    animating = false;
+  }, 550);
+}
+
+function navigate(dir) { goTo(current + dir, dir); }
+
+// Keyboard
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault(); navigate(1);
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault(); navigate(-1);
+  }
+});
+
+// Mouse wheel (debounced)
+var wheelTimer = null;
+document.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  if (wheelTimer) return;
+  var dir = e.deltaY > 0 || e.deltaX > 0 ? 1 : -1;
+  navigate(dir);
+  wheelTimer = setTimeout(function() { wheelTimer = null; }, 700);
+}, { passive: false });
+
+// Touch swipe
+var touchStartX = 0;
+document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend', function(e) {
+  var dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+});
+
+// Restore saved notes
+document.querySelectorAll('.note-drawer textarea').forEach(function(ta) {
+  var slideId = ta.id.replace('text-', '');
+  var saved = localStorage.getItem('note-' + slideId);
+  if (saved) {
+    ta.value = saved;
+    var btn = document.querySelector('[onclick="toggleNote(\'' + slideId + '\')"]');
+    if (btn) btn.classList.add('has-note');
+  }
+});
+
+// Init first slide
+slides[0].classList.add('active');
+slides[0].style.transition = 'none';
+updateChrome(0);
+setTimeout(function() { slides[0].style.transition = ''; }, 100);
+
+// ─── NOTES ───
+function toggleNote(slideId) {
+  var drawer = document.getElementById('note-' + slideId);
+  drawer.classList.toggle('open');
+  if (drawer.classList.contains('open')) drawer.querySelector('textarea').focus();
+}
+function saveNote(slideId) {
+  var ta = document.getElementById('text-' + slideId);
+  var btn = document.querySelector('[onclick="toggleNote(\'' + slideId + '\')"]');
+  if (ta.value.trim()) {
+    localStorage.setItem('note-' + slideId, ta.value);
+    if (btn) btn.classList.add('has-note');
+  } else {
+    localStorage.removeItem('note-' + slideId);
+    if (btn) btn.classList.remove('has-note');
+  }
+  document.getElementById('note-' + slideId).classList.remove('open');
+}
+
+// ─── EXPORT NOTES ───
+document.getElementById('export-btn').onclick = function() {
+  var lines = [];
+  for (var i = 1; i <= 20; i++) {
+    var val = localStorage.getItem('note-s' + i);
+    if (val && val.trim()) lines.push('SLIDE ' + i + ':\n' + val.trim());
+  }
+  if (!lines.length) { alert('No notes found.'); return; }
+  navigator.clipboard.writeText(lines.join('\n\n---\n\n')).then(function() {
+    var btn = document.getElementById('export-btn');
+    btn.textContent = '✓ Copied!';
+    setTimeout(function(){ btn.textContent = '📋 Notes'; }, 2000);
+  });
+};
+</script>
