@@ -122,7 +122,6 @@ body {
   align-items: center;
   padding: 0 28px;
   background: inherit;
-  transition: background 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
 }
 .slide-logo img { height: 16px; opacity: 0.55; }
 
@@ -366,15 +365,13 @@ body {
 #s3 { background: var(--cream); }
 #s3 .inner {
   flex: 1;
-  min-height: 0;
   padding: 48px 64px 60px;
   display: flex;
   flex-direction: column;
   gap: 32px;
-  overflow: hidden;
 }
 #s3 .top { display: flex; flex-direction: column; gap: 10px; }
-#s3 .prob-cols { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: minmax(0,1fr); gap: 24px; flex: 1; min-height: 0; overflow: hidden; }
+#s3 .prob-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; flex: 1; }
 #s3 .prob-col {
   background: var(--white);
   border-radius: 10px;
@@ -383,8 +380,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  min-height: 0;
-  overflow: hidden;
 }
 #s3 .prob-col-label {
   font-size: 10px;
@@ -438,22 +433,20 @@ body {
 #s4 { background: var(--cream); }
 #s4 .inner {
   flex: 1;
-  min-height: 0;
-  padding: 36px 64px 60px;
+  padding: 48px 64px 60px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 28px;
 }
-#s4 .why-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: minmax(0,1fr) minmax(0,1fr); gap: 12px; flex: 1; min-height: 0; overflow: hidden; }
+#s4 .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; }
 #s4 .why-card {
   background: var(--white);
   border: 1px solid var(--rule);
   border-radius: 10px;
-  padding: 18px 20px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  min-height: 0;
+  gap: 10px;
 }
 #s4 .why-card.featured {
   background: var(--white);
@@ -470,7 +463,7 @@ body {
 }
 #s4 .why-card.featured .why-tag { color: var(--red); }
 #s4 .why-head {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
@@ -478,17 +471,13 @@ body {
 }
 #s4 .why-card.featured .why-head { color: var(--ink); }
 #s4 .why-body {
-  font-size: 12px;
-  line-height: 1.45;
+  font-size: 13px;
+  line-height: 1.5;
   color: var(--ink-soft);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 #s4 .why-card.featured .why-body { color: var(--ink-soft); }
 #s4 .why-stat {
-  font-size: 26px;
+  font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--red);
@@ -661,63 +650,6 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .note-save-btn:hover { background: #333; }
-
-/* ── Photo Wing ─────────────────────────────────────────────── */
-.photo-wing {
-  flex-shrink: 0;
-  transition: flex-basis 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.photo-wing:hover { flex-basis: 52% !important; }
-.photo-wing .pw-inner {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-}
-.photo-wing .pw-inner img {
-  width: 100%; height: 100%;
-  object-fit: cover; display: block;
-  transition: transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94);
-}
-.photo-wing:hover .pw-inner img { transform: scale(1.04); }
-.photo-wing .pw-caption {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 40px 22px 14px;
-  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
-  pointer-events: none;
-}
-.photo-wing .pw-label {
-  font-size: 8px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.22em;
-  color: var(--red); margin-bottom: 4px;
-}
-.photo-wing .pw-name {
-  font-size: 13px; font-weight: 700;
-  color: #fff; letter-spacing: -0.01em; line-height: 1.25;
-}
-/* Slide-logo: transparent over photo wing, opaque over content */
-/* LEFT-photo slides: photo is 42% → logo transparent for left 42% */
-#s4  .slide-logo { background: linear-gradient(to right, transparent 42%, var(--cream) 42.5%); }
-#s11 .slide-logo { background: linear-gradient(to right, transparent 42%, var(--ink)   42.5%); }
-/* RIGHT-photo slides: photo is 42% right → logo transparent for right 42% */
-#s9  .slide-logo { background: linear-gradient(to right, var(--cream) 57.5%, transparent 58%); }
-#s12 .slide-logo { background: linear-gradient(to right, var(--cream) 57.5%, transparent 58%); }
-/* Slide-num: white on right-photo slides (number sits in photo column) */
-#s9  .slide-num { color: rgba(255,255,255,0.45); }
-#s12 .slide-num { color: rgba(255,255,255,0.45); }
-/* Left-photo slides: gradient stays at bottom:0, but text padding clears the 44px footer */
-#s4  .pw-caption { padding-bottom: 54px; }
-#s11 .pw-caption { padding-bottom: 54px; }
-/* Slide 4: grid rows constrained via grid-template-rows above */
-/* Slide-logo gradient follows photo wing hover expansion (42% → 52%) */
-#s4:has(.photo-wing:hover)  .slide-logo { background: linear-gradient(to right, transparent 52%, var(--cream) 52.5%); }
-#s11:has(.photo-wing:hover) .slide-logo { background: linear-gradient(to right, transparent 52%, var(--ink)   52.5%); }
-#s9:has(.photo-wing:hover)  .slide-logo { background: linear-gradient(to right, var(--cream) 47.5%, transparent 48%); }
-#s12:has(.photo-wing:hover) .slide-logo { background: linear-gradient(to right, var(--cream) 47.5%, transparent 48%); }
-
 </style>
 </head>
 <body>
@@ -869,17 +801,7 @@ body {
 <!-- ════════════════════════════════════════════
   SLIDE 4 — WHY NOW
 ════════════════════════════════════════════ -->
-<div class="slide" id="s4" style="flex-direction:row;">
-  <div class="photo-wing" style="flex-basis:42%;">
-    <div class="pw-inner">
-      <img src="img/wedding-116.jpg" alt="" style="object-position:center 40%;">
-      <div class="pw-caption">
-        <div class="pw-label">B2C · Private Wedding Reception</div>
-        <div class="pw-name">Maria &amp; Robbie · Casa Caeli, NYC</div>
-      </div>
-    </div>
-  </div>
-  <div style="flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden;max-height:calc(100% - 44px);">
+<div class="slide" id="s4">
   <div class="accent-bar"></div>
   <div class="inner">
     <div style="display:flex;flex-direction:column;gap:10px;">
@@ -889,7 +811,7 @@ body {
     <div class="why-grid">
       <div class="why-card featured">
         <div style="height:6px;background:var(--red);"></div>
-        <div style="padding:14px 18px 16px;display:flex;flex-direction:column;gap:7px;flex:1;">
+        <div style="padding:22px 28px 28px;display:flex;flex-direction:column;gap:10px;flex:1;">
         <div class="why-tag">Regulatory shift</div>
         <div class="why-head">NYC Airbnb law:<br>70% drop in listings</div>
         <div class="why-body">~4,000 high-value properties removed from Airbnb. Premium rental platforms like Plum Guide and OneFineStay — which were marketing the exact spaces Cocoon targets — were hit hardest. Their displaced inventory is our pipeline.</div>
@@ -899,7 +821,7 @@ body {
       </div>
       <div class="why-card" style="overflow:hidden;padding:0;">
         <div style="height:6px;background:var(--teal);"></div>
-        <div style="padding:14px 18px 16px;display:flex;flex-direction:column;gap:7px;flex:1;">
+        <div style="padding:28px;display:flex;flex-direction:column;gap:10px;flex:1;">
         <div class="why-tag">Wealth policy</div>
         <div class="why-head">Proposed NYC asset tax creates a new pipeline</div>
         <div class="why-body">Family offices holding trophy properties they rarely use face new incentives to monetize. We onboarded our first family office property in late 2025.</div>
@@ -909,7 +831,7 @@ body {
       </div>
       <div class="why-card" style="overflow:hidden;padding:0;">
         <div style="height:6px;background:var(--ink);"></div>
-        <div style="padding:14px 18px 16px;display:flex;flex-direction:column;gap:7px;flex:1;">
+        <div style="padding:28px;display:flex;flex-direction:column;gap:10px;flex:1;">
         <div class="why-tag">Demand side</div>
         <div class="why-head">The IRL economy is accelerating across every category</div>
         <div class="why-body">Brand activations up 43% YoY. Corporate retreats, offsite meetings, team buildings, private events, and event production all growing. The $1.5T+ corporate events market is shifting toward design-forward, non-hotel venues — and there is no dominant premium operator to serve it.</div>
@@ -919,7 +841,7 @@ body {
       </div>
       <div class="why-card" style="overflow:hidden;padding:0;">
         <div style="height:6px;background:var(--red);"></div>
-        <div style="padding:14px 18px 16px;display:flex;flex-direction:column;gap:7px;flex:1;">
+        <div style="padding:28px;display:flex;flex-direction:column;gap:10px;flex:1;">
         <div class="why-tag">Global spread</div>
         <div class="why-head">Short-term rental regulations spreading worldwide</div>
         <div class="why-body">London, Madrid, Paris, Tokyo — similar regulatory pressure is creating identical market conditions in every major city. The Cocoon model is exportable.</div>
@@ -929,7 +851,6 @@ body {
       </div>
     </div>
   </div>
-  </div><!-- /col -->
   <div class="slide-logo"><a href="https://cocoonflexspaces.com" target="_blank" style="display:block;line-height:0;border:none;outline:none;"><img src="img/cocoon/wordmark-320.png" alt="cocoon"></a></div>
   <button class="note-btn" onclick="toggleNote('s4')">✏ Note</button>
   <div class="note-drawer" id="note-s4">
@@ -1272,8 +1193,7 @@ body {
 <!-- ════════════════════════════════════════════
   SLIDE 9 — HOW WE WORK
 ════════════════════════════════════════════ -->
-<div class="slide" id="s9" style="background:var(--cream);flex-direction:row;">
-  <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
+<div class="slide" id="s9" style="background:var(--cream);">
   <div class="accent-bar"></div>
   <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
     <div style="display:flex;flex-direction:column;gap:10px;">
@@ -1330,16 +1250,6 @@ body {
         <div style="background:rgba(245,64,41,0.07);border-radius:8px;padding:14px 18px;font-size:12px;color:var(--ink-soft);">
           <strong style="color:var(--ink);">Result:</strong> An extraordinary space that works, with one call to make it happen.
         </div>
-      </div>
-    </div>
-  </div>
-  </div><!-- /col -->
-  <div class="photo-wing" style="flex-basis:42%;">
-    <div class="pw-inner">
-      <img src="img/publicgoods-123.jpg" alt="" style="object-position:left top;">
-      <div class="pw-caption">
-        <div class="pw-label">B2B · Offsite &amp; Team Building</div>
-        <div class="pw-name">Public Goods · Casa Janka, Brooklyn</div>
       </div>
     </div>
   </div>
@@ -1405,17 +1315,7 @@ body {
 <!-- ════════════════════════════════════════════
   SLIDE 11 — OUR ACCOMPLISHMENTS
 ════════════════════════════════════════════ -->
-<div class="slide" id="s11" style="background:var(--ink);flex-direction:row;">
-  <div class="photo-wing" style="flex-basis:42%;">
-    <div class="pw-inner">
-      <img src="img/dsc-4501.jpg" alt="" style="object-position:center top;">
-      <div class="pw-caption">
-        <div class="pw-label">B2B · Fashion Show</div>
-        <div class="pw-name">Alejandra Rojas · Casa Duende, NYC</div>
-      </div>
-    </div>
-  </div>
-  <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
+<div class="slide" id="s11" style="background:var(--ink);">
   <div style="flex:1;padding:52px 64px 80px;display:flex;flex-direction:column;gap:32px;">
     <div style="display:flex;flex-direction:column;gap:10px;">
       <div class="section-label" style="color:var(--red);">Our Accomplishments</div>
@@ -1455,16 +1355,9 @@ body {
         <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Fendi <span style="font-size:10px;color:rgba(255,255,255,0.35);font-weight:500;">2026</span></span>
         <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Dolce &amp; Gabbana</span>
         <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Djerf Avenue</span>
-        <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Apple</span>
-        <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Google</span>
-        <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Pepsi</span>
-        <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">New York Times</span>
-        <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">Netflix</span>
-        <span style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);padding:4px 12px;border-radius:100px;">HBO</span>
       </div>
     </div>
   </div>
-  </div><!-- /col -->
   <div class="slide-logo"><a href="https://cocoonflexspaces.com" target="_blank" style="display:block;line-height:0;border:none;outline:none;"><img src="img/cocoon/wordmark-320.png" alt="cocoon" style="filter:brightness(0) invert(1);opacity:0.4;"></a></div>
   <button class="note-btn" onclick="toggleNote('s11')">✏ Note</button>
   <div class="note-drawer" id="note-s11">
@@ -1479,8 +1372,7 @@ body {
 <!-- ════════════════════════════════════════════
   SLIDE 12 — CASE STUDIES
 ════════════════════════════════════════════ -->
-<div class="slide" id="s12" style="background:var(--cream);flex-direction:row;">
-  <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
+<div class="slide" id="s12" style="background:var(--cream);">
   <div class="accent-bar"></div>
   <div style="flex:1;padding:44px 64px 80px;display:flex;flex-direction:column;gap:24px;">
     <div style="display:flex;flex-direction:column;gap:10px;">
@@ -1535,16 +1427,6 @@ body {
             <span style="font-size:11px;font-weight:600;color:var(--teal);">Advanced conversations</span>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  </div><!-- /col -->
-  <div class="photo-wing" style="flex-basis:42%;">
-    <div class="pw-inner">
-      <img src="img/roborock-158.jpg" alt="" style="object-position:left center;">
-      <div class="pw-caption">
-        <div class="pw-label">B2B · Brand Activation</div>
-        <div class="pw-name">Roborock · Casa Yugen, NYC</div>
       </div>
     </div>
   </div>
