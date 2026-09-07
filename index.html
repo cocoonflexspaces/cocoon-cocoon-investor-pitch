@@ -2019,7 +2019,8 @@ document.getElementById('send-notes-btn').onclick = function() {
 </script>
 
 
-<!-- ── Mobile: fullscreen launcher ─────────────────────────────────── -->
+
+<!-- ── Mobile: fullscreen launcher + scale ──────────────────────────── -->
 <div id="mobile-launcher" style="
   display:none;position:fixed;inset:0;z-index:9999;
   background:var(--cream);
@@ -2046,57 +2047,84 @@ document.getElementById('send-notes-btn').onclick = function() {
   </div>
 </div>
 
-<!-- Small re-open fullscreen pill (shows after launcher is dismissed) -->
 <button id="fs-pill" onclick="goFullscreen()" style="
   display:none;position:fixed;bottom:56px;right:16px;z-index:1000;
   background:rgba(26,26,26,0.75);color:#fff;border:none;border-radius:100px;
   padding:8px 16px;font-size:12px;font-weight:600;cursor:pointer;
-  backdrop-filter:blur(6px);gap:6px;align-items:center;
+  backdrop-filter:blur(6px);align-items:center;gap:6px;
 ">⛶ Fullscreen</button>
 
 <script>
 (function(){
+  var DECK_W = 1280, DECK_H = 720;
   var launcher = document.getElementById('mobile-launcher');
   var rotateHint = document.getElementById('rotate-hint');
   var pill = document.getElementById('fs-pill');
   var launched = false;
 
   function isMobile(){
-    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth < 1024;
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || Math.min(screen.width,screen.height) < 768;
   }
 
-  function updateHint(){
-    var portrait = window.innerHeight > window.innerWidth;
-    rotateHint.style.display = portrait ? 'flex' : 'none';
-    document.getElementById('fs-btn').style.display = portrait ? 'none' : '';
+  function applyScale(){
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var scale = Math.min(vw / DECK_W, vh / DECK_H);
+    var slides = document.querySelectorAll('.slide');
+    document.body.style.cssText = [
+      'transform:scale('+scale+')',
+      'transform-origin:top left',
+      'width:'+DECK_W+'px',
+      'overflow-x:hidden'
+    ].join(';');
+    // Offset the page so scaled content is centered horizontally
+    var offsetX = (vw - DECK_W * scale) / 2;
+    var offsetY = 0;
+    document.body.style.marginLeft = offsetX + 'px';
+    document.body.style.marginTop = offsetY + 'px';
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  function removeScale(){
+    document.body.style.cssText = '';
+    document.body.style.transform = '';
+    document.body.style.width = '';
+    document.body.style.marginLeft = '';
+    document.documentElement.style.overflow = '';
+  }
+
+  function onFSChange(){
+    var inFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    if(inFS && launched){
+      setTimeout(applyScale, 100);
+      pill.style.display = 'none';
+    } else if(!inFS && launched){
+      removeScale();
+      pill.style.display = 'flex';
+    }
   }
 
   window.goFullscreen = function(){
     var el = document.documentElement;
     if(el.requestFullscreen) el.requestFullscreen();
     else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-    pill.style.display = 'none';
   };
 
   window.launchDeck = function(){
-    goFullscreen();
     launcher.style.display = 'none';
     launched = true;
+    goFullscreen();
   };
 
-  document.addEventListener('fullscreenchange', function(){
-    if(!document.fullscreenElement && launched && isMobile()){
-      pill.style.display = 'flex';
-    }
-  });
-  document.addEventListener('webkitfullscreenchange', function(){
-    if(!document.webkitFullscreenElement && launched && isMobile()){
-      pill.style.display = 'flex';
-    }
-  });
+  function updateHint(){
+    var portrait = window.innerHeight > window.innerWidth;
+    rotateHint.style.display = portrait ? 'flex' : 'none';
+    document.getElementById('fs-btn').style.display = portrait ? 'none' : 'flex';
+  }
 
-  window.addEventListener('orientationchange', function(){ setTimeout(updateHint, 200); });
-  window.addEventListener('resize', updateHint);
+  document.addEventListener('fullscreenchange', onFSChange);
+  document.addEventListener('webkitfullscreenchange', onFSChange);
+  window.addEventListener('orientationchange', function(){ setTimeout(updateHint,200); });
+  window.addEventListener('resize', function(){ if(launched) applyScale(); });
 
   if(isMobile()){
     launcher.style.display = 'flex';
