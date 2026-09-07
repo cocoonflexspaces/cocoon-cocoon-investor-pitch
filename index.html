@@ -2055,12 +2055,18 @@ document.getElementById('send-notes-btn').onclick = function() {
   function applyScale(){
     var vw = window.innerWidth, vh = window.innerHeight;
     var scale = Math.min(vw / DECK_W, vh / DECK_H);
-    document.body.style.transform = 'scale('+scale+')';
-    document.body.style.transformOrigin = 'top left';
-    document.body.style.width = DECK_W + 'px';
-    document.body.style.marginLeft = ((vw - DECK_W * scale) / 2) + 'px';
-    document.body.style.marginTop = ((vh - DECK_H * scale) / 2) + 'px';
-    document.body.style.overflowX = 'hidden';
+    var deck = document.getElementById('deck');
+    // Switch body from flex-center to block, use absolute positioning on deck
+    document.body.style.display = 'block';
+    document.body.style.width = vw + 'px';
+    document.body.style.height = vh + 'px';
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'relative';
+    deck.style.position = 'absolute';
+    deck.style.left = '50%';
+    deck.style.top = '50%';
+    deck.style.transform = 'translate(-50%, -50%) scale(' + scale + ')';
+    deck.style.transformOrigin = 'center center';
     document.documentElement.style.overflow = 'hidden';
   }
 
