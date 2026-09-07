@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Cocoon Flex Spaces — 2026 Investor Deck</title>
 <style>
 :root {
@@ -2017,6 +2017,69 @@ document.getElementById('send-notes-btn').onclick = function() {
   window.location.href = 'mailto:eduard@cocoonflexspaces.com?subject=' + subject + '&body=' + body;
 };
 </script>
+
+<!-- ── Mobile: rotate prompt + landscape scale ─────────────────────── -->
+<div id="rotate-prompt" style="
+  display:none;
+  position:fixed;inset:0;z-index:9999;
+  background:var(--cream);
+  flex-direction:column;align-items:center;justify-content:center;gap:20px;
+  font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+">
+  <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="18" y="8" width="28" height="48" rx="5" stroke="#F54029" stroke-width="3"/>
+    <path d="M44 20 L56 32 L44 44" stroke="#F54029" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M8 32 L56 32" stroke="#F54029" stroke-width="2" stroke-dasharray="4 4" opacity="0.3"/>
+  </svg>
+  <div style="font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;">Rotate your phone</div>
+  <div style="font-size:13px;color:var(--ink-soft);text-align:center;max-width:240px;line-height:1.5;">
+    This deck is best viewed in landscape mode.
+  </div>
+</div>
+
+<script>
+(function() {
+  var DECK_W = 1280, DECK_H = 720;
+  var prompt = document.getElementById('rotate-prompt');
+
+  function update() {
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || vw < 1024;
+    var isPortrait = vh > vw;
+
+    // Show rotate prompt on mobile portrait
+    if (isMobile && isPortrait) {
+      prompt.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+    prompt.style.display = 'none';
+    document.body.style.overflow = '';
+
+    // Scale deck in landscape mobile / small screens
+    if (isMobile || vw < DECK_W) {
+      var scale = Math.min(vw / DECK_W, vh / DECK_H);
+      document.body.style.transform = 'scale(' + scale + ')';
+      document.body.style.transformOrigin = 'top left';
+      document.body.style.width = DECK_W + 'px';
+      document.body.style.height = (DECK_H * Math.ceil(document.querySelectorAll('.slide').length)) + 'px';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      document.body.style.transform = '';
+      document.body.style.transformOrigin = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      document.documentElement.style.overflow = '';
+    }
+  }
+
+  window.addEventListener('resize', update);
+  window.addEventListener('orientationchange', function(){ setTimeout(update, 150); });
+  document.addEventListener('DOMContentLoaded', update);
+  update();
+})();
+</script>
+
 </body>
 </html>
 
